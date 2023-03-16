@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from db.db import async_engine
-from ssp_management.admin import BrandAdmin
+from ssp_management.admin import BrandAdmin, ProductAdmin
 from sqladmin import Admin
 from ssp_management.routes import router as sm_router
 
@@ -14,6 +14,7 @@ app.include_router(sm_router)
 admin = Admin(app, async_engine)
 
 admin.add_view(BrandAdmin)
+admin.add_view(ProductAdmin)
 
 
 if __name__ == '__main__':
