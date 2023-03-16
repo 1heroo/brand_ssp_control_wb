@@ -83,7 +83,7 @@ class ParsingUtils(BaseUtils):
             print(brand_id)
             products += await self.get_catalog(url=url)
 
-        products = products[:5] + products[-5:]
+        # products = products[:5] + products[-5:]
         return products
 
     async def get_detail_by_nms(self, nms):
