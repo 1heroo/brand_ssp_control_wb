@@ -45,12 +45,12 @@ class SSPServices:
                     if max_ssp > my_product_ssp:
                         print(f'found product to be updated', product['card'].get('nm_id'))
                         kts_to_be_updated.append(
-                            await self.update_brand(product=product, brand_column=brand_column, auth=auth))
+                            await self.update_brand(product=product, max_spp=max_ssp, auth=auth))
         await self.api_utils.update_kts(token_auth=auth, kts=kts_to_be_updated)
 
-    async def update_brand(self, product, brand_column, auth):
+    async def update_brand(self, product, max_spp, auth):
 
-        _, brand_id, brand_name = brand_column.split(' ')
+        ssp, brand_name = max_spp.split(' ')
         vendorCode = product['card'].get('vendor_code')
         print(vendorCode)
         products = await self.api_utils.get_products_by_vendor_codes(token_auth=auth, vendorCodes=[vendorCode])
@@ -82,7 +82,7 @@ class SSPServices:
                     unique_products.append({
                         'Подкатегория': product['card'].get('subj_root_name'),
                         'Подкатегория2': product['card'].get('subj_name'),
-                        f'ssp {brand_id} {product["detail"].get("brand")}': extended.get('clientSale'),
+                        f'ssp {brand_id}': f'{extended.get("clientSale")} {product["detail"].get("brand")}',
                         # f'nm {brand_id}': product['detail'].get('id')
                     })
                     products.remove(product)

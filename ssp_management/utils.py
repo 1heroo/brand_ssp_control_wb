@@ -11,7 +11,7 @@ class BaseUtils:
     async def make_get_request(url, headers, no_json=False):
         async with aiohttp.ClientSession(trust_env=True, headers=headers) as session:
             async with session.get(url=url) as response:
-                print(response.status)
+                # print(response.status)
 
                 if response.status == 200:
                     return True if no_json else json.loads(await response.text())
@@ -31,10 +31,10 @@ class BaseUtils:
         for column in df.columns:
             if 'ssp' in column:
                 ssps.append(
-                    (column, int(df[column][index]))
+                    (column, df[column][index])
                 )
 
-        return max(ssps, key=lambda item: item[-1])
+        return max(ssps, key=lambda item: int(item[-1].split(' ')[0]))
 
 
 class ParsingUtils(BaseUtils):
